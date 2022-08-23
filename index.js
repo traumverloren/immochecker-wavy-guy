@@ -12,7 +12,15 @@ const options = {
 const httpServer = require('https').createServer(options, app);
 const ws = require('websocket-stream');
 const appPort = 8080;
+const mqtt = require('net').createServer(aedes.handle);
+const mqttPort = 1883;
 
+// mqtt broker for the arduino client
+mqtt.listen(mqttPort, function () {
+  console.log('mqtt server listening on port', mqttPort);
+});
+
+// secure mqtt broker for browser clients
 ws.createServer(
   {
     server: httpServer,
